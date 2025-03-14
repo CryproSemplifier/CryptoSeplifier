@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notizie - Crypto Seplifier</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Stili specifici per la pagina notizie */
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .news-section {
+            background-color: #1A2526;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        
+        .news-section h3 {
+            margin-bottom: 15px;
+            color: #00FF7F;
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .news-card {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 3px solid var(--accent-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .news-card-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .news-card-title a {
+            color: var(--text-color);
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+        
+        .news-card-title a:hover {
+            color: #2ecc71;
+            transform: scale(1.1);
+        }
+        
+        .news-card-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        
+        .news-card-description {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .loading-section {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        @media (min-width: 992px) {
+            .news-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Crypto Seplifier</h1>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="news.html" class="active">Notizie</a></li>
+                    <li><a href="charts.html">Grafici</a></li>
+                    <li><a href="top-gainer-loser.html">Top Gainer & Top Loser</a></li>
+                    <li><a href="info.html">Informazioni</a></li>
+                </ul>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Ultime Notizie</h2>
+                <p>Rimani aggiornato sulle ultime notizie che influenzano il mercato delle criptovalute</p>
+            </div>
+        </section>
+
+        <section class="news-page-section">
+            <div class="container">
+                <div class="news-grid">
+                    <!-- Sezione Criptovalute -->
+                    <div class="news-section" id="crypto-news">
+                        <h3>Criptovalute</h3>
+                        <div class="news-list">
+                            <div class="loading-section">Caricamento notizie sulle criptovalute...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sezione Mercati Azionari -->
+                    <div class="news-section" id="stock-news">
+                        <h3>Mercati Azionari</h3>
+                        <div class="news-list">
+                            <div class="loading-section">Caricamento notizie sui mercati azionari...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sezione Oro -->
+                    <div class="news-section" id="gold-news">
+                        <h3>Oro</h3>
+                        <div class="news-list">
+                            <div class="loading-section">Caricamento notizie sull'oro...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sezione Geopolitiche -->
+                    <div class="news-section" id="geopolitics-news">
+                        <h3>Geopolitiche</h3>
+                        <div class="news-list">
+                            <div class="loading-section">Caricamento notizie geopolitiche...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- News Popup (manteniamo il popup per coerenza con le altre pagine) -->
+    <div class="news-popup" id="news-popup">
+        <div class="news-popup-content">
+            <div class="news-popup-header">
+                <h3>Ultime Notizie su Bitcoin & XRP</h3>
+                <span class="close-popup" id="close-popup">&times;</span>
+            </div>
+            <div class="news-popup-body" id="news-container">
+                <div class="loading-news">Caricamento notizie...</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Crypto Seplifier. Tutti i diritti riservati.</p>
+            <p>Disclaimer: Le informazioni fornite su questo sito non costituiscono consulenza finanziaria.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/news.js"></script>
+    <script src="js/news-page.js"></script>
+</body>
+</html>

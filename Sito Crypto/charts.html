@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafici - Crypto Seplifier</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .chart-box {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .chart-box h3 {
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+        
+        .chart-wrapper {
+            height: 500px;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+        }
+        
+        @media (min-width: 992px) {
+            .charts-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Crypto Seplifier</h1>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="news.html">Notizie</a></li>
+                    <li><a href="charts.html" class="active">Grafici</a></li>
+                    <li><a href="top-gainer-loser.html">Top Gainer & Top Loser</a></li>
+                    <li><a href="info.html">Informazioni</a></li>
+                </ul>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Grafici Dettagliati</h2>
+                <p>Analizza l'andamento di Bitcoin e XRP con grafici interattivi aggiornati in tempo reale</p>
+            </div>
+        </section>
+
+        <section class="charts-section">
+            <div class="container">
+                <div class="charts-container">
+                    <div class="chart-box">
+                        <h3>Bitcoin (BTC/USD)</h3>
+                        <div class="chart-wrapper" id="btc-chart"></div>
+                    </div>
+                    <div class="chart-box">
+                        <h3>XRP (XRP/USD)</h3>
+                        <div class="chart-wrapper" id="xrp-chart"></div>
+                    </div>
+                    <div class="chart-box">
+                        <h3>Bitcoin Dominance</h3>
+                        <div class="chart-wrapper" id="btc-dominance-chart"></div>
+                    </div>
+                    <div class="chart-box">
+                        <h3>Volume di Mercato</h3>
+                        <div class="chart-wrapper" id="market-volume-chart"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- News Popup -->
+    <div class="news-popup" id="news-popup">
+        <div class="news-popup-content">
+            <div class="news-popup-header">
+                <h3>Ultime Notizie su Bitcoin & XRP</h3>
+                <span class="close-popup" id="close-popup">&times;</span>
+            </div>
+            <div class="news-popup-body" id="news-container">
+                <div class="loading-news">Caricamento notizie...</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Crypto Seplifier. Tutti i diritti riservati.</p>
+            <p>Disclaimer: Le informazioni fornite su questo sito non costituiscono consulenza finanziaria.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/news.js"></script>
+    <script src="js/charts.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load TradingView widget script
+            function loadTradingViewScript() {
+                const script = document.createElement('script');
+                script.src = 'https://s3.tradingview.com/tv.js';
+                script.async = true;
+                script.onload = function() {
+                    // Initialize charts
+                    initChart('btc-chart', 'BINANCE:BTCUSDT');
+                    initChart('xrp-chart', 'BINANCE:XRPUSDT');
+                    initChart('btc-dominance-chart', 'CRYPTOCAP:BTC.D');
+                    initChart('market-volume-chart', 'CRYPTOCAP:TOTAL', 'Volume');
+                };
+                document.head.appendChild(script);
+            }
+            
+            // Function to initialize TradingView widget
+            function initChart(containerId, symbol, chartType = 'Candles') {
+                new TradingView.widget({
+                    "autosize": true,
+                    "symbol": symbol,
+                    "interval": "D",
+                    "timezone": "Europe/Rome",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "it",
+                    "toolbar_bg": "#f1f3f6",
+                    "enable_publishing": false,
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "save_image": false,
+                    "studies": [chartType === 'Volume' ? "Volume@tv-basicstudies" : ""],
+                    "container_id": containerId
+                });
+            }
+            
+            // Load TradingView script
+            loadTradingViewScript();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Gainer & Top Loser - Crypto Seplifier</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .gainers-losers-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .column {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--secondary-color);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        
+        .column h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: var(--accent-color);
+        }
+        
+        .timeframe-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .timeframe-btn {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .timeframe-btn:hover,
+        .timeframe-btn.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .crypto-list {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 600px;
+            overflow-y: auto;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--primary-color);
+        }
+        
+        .crypto-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .crypto-list::-webkit-scrollbar-track {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        .crypto-list::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 10px;
+        }
+        
+        .crypto-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .crypto-item:last-child {
+            border-bottom: none;
+        }
+        
+        .crypto-item:hover {
+            transform: scale(1.05);
+            background-color: rgba(15, 157, 88, 0.1);
+            border-radius: 5px;
+        }
+        
+        .crypto-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .crypto-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .crypto-name {
+            font-weight: 500;
+        }
+        
+        .crypto-symbol {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+        
+        .crypto-change {
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .positive {
+            color: var(--greed-color);
+        }
+        
+        .negative {
+            color: var(--fear-color);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .error-message {
+            text-align: center;
+            padding: 20px;
+            color: var(--fear-color);
+        }
+        
+        .last-update {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: right;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .gainers-losers-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Crypto Seplifier</h1>
+            </div>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="news.html">Notizie</a></li>
+                    <li><a href="charts.html">Grafici</a></li>
+                    <li><a href="top-gainer-loser.html" class="active">Top Gainer & Top Loser</a></li>
+                    <li><a href="info.html">Informazioni</a></li>
+                </ul>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="container">
+            <div class="gainers-losers-container">
+                <!-- Colonna Top Gainer -->
+                <div class="column">
+                    <h2>Top Gainer</h2>
+                    <div class="timeframe-selector">
+                        <button class="timeframe-btn active" data-timeframe="24h" data-column="gainer">Giorno</button>
+                        <button class="timeframe-btn" data-timeframe="7d" data-column="gainer">Settimana</button>
+                        <button class="timeframe-btn" data-timeframe="30d" data-column="gainer">Mese</button>
+                        <button class="timeframe-btn" data-timeframe="1y" data-column="gainer">Anno</button>
+                        <button class="timeframe-btn" data-timeframe="all" data-column="gainer">All Time</button>
+                    </div>
+                    <div class="crypto-list" id="gainer-list">
+                        <div class="loading">Caricamento dati...</div>
+                    </div>
+                    <p class="last-update" id="gainer-update">Ultimo aggiornamento: --</p>
+                </div>
+                
+                <!-- Colonna Top Loser -->
+                <div class="column">
+                    <h2>Top Loser</h2>
+                    <div class="timeframe-selector">
+                        <button class="timeframe-btn active" data-timeframe="24h" data-column="loser">Giorno</button>
+                        <button class="timeframe-btn" data-timeframe="7d" data-column="loser">Settimana</button>
+                        <button class="timeframe-btn" data-timeframe="30d" data-column="loser">Mese</button>
+                        <button class="timeframe-btn" data-timeframe="1y" data-column="loser">Anno</button>
+                        <button class="timeframe-btn" data-timeframe="all" data-column="loser">All Time</button>
+                    </div>
+                    <div class="crypto-list" id="loser-list">
+                        <div class="loading">Caricamento dati...</div>
+                    </div>
+                    <p class="last-update" id="loser-update">Ultimo aggiornamento: --</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Disclaimer Popup -->
+    <div class="disclaimer-popup" id="disclaimer-popup">
+        <div class="disclaimer-popup-content">
+            <p>Questo sito riporta e combina dati e notizie, ma non costituisce un consiglio finanziario. Si declina ogni responsabilità.</p>
+            <button id="close-disclaimer">Chiudi</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Crypto Seplifier. Tutti i diritti riservati.</p>
+            <p>Disclaimer: Le informazioni fornite su questo sito non costituiscono consulenza finanziaria.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/disclaimer.js"></script>
+    <script src="js/top-gainer-loser.js"></script>
+</body>
+</html>
