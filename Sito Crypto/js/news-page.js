@@ -89,15 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Limita la descrizione a 2 righe (gestito tramite CSS)
             const description = article.description || 'Nessuna descrizione disponibile';
-            
+
             newsHTML += `
                 <div class="news-card">
                     <h4 class="news-card-title"><a href="${article.url}" target="_blank">${article.title}</a></h4>
                     <div class="news-card-meta">
                         <span>${article.source.name}</span>
-                        <span>Crypto Insights, ${formattedDate}</span>
+                        <span>${formattedDate}</span>
                     </div>
-                    <p class="news-card-description">${article.description}</p>
+                    <p class="news-card-description">${description}</p>
                 </div>
             `;
         });
@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h4 class="news-card-title"><a href="${article.url}" target="_blank">${article.title}</a></h4>
                     <div class="news-card-meta">
                         <span>${article.source.name}</span>
-                        <span>Crypto Insights, ${formattedDate}</span>
+                        <span>${formattedDate}</span>
                     </div>
                     <p class="news-card-description">${article.description}</p>
                 </div>
